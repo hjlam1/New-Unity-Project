@@ -90,7 +90,7 @@ public class VideoManager : MonoBehaviour
         leftOn = thisSimpleSerial.left;
         rightOn = thisSimpleSerial.right;
 
-        if (connect == 0 && leftOn == 0 && rightOn == 0)
+        /*if (connect == 0 && leftOn == 0 && rightOn == 0)
        {
            Stage = 1;
        }
@@ -101,7 +101,7 @@ public class VideoManager : MonoBehaviour
        }
        else {
            Stage = 2;
-       }
+       }*/
 
         if (stage3)
         {
@@ -148,56 +148,19 @@ public class VideoManager : MonoBehaviour
                 StartCoroutine(StartStageOne());
                 fadeTime = VideoPlayer1.GetComponent<FadeIn>().lerpDuration;
                 start = false;
-                //print("Stage 4" + CurrentOne);
-                //StartCoroutine(StartStageOne());
-                NextOne = VideoPlayer4;
-                NextOne.transform.GetComponent<MeshRenderer>().material.color = new Color(NextOne.transform.GetComponent<MeshRenderer>().material.color.r,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.g,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.b,
-                                                                              0);
-                VideoPlayer1.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer2.transform.position = new Vector3(100f, 0f, 0f);
-                VideoPlayer3.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer4.transform.position = new Vector3(100f, 0f, .1f);
 
-                CurrentOne.transform.position = new Vector3(0f, 0f, 0f);
-                NextOne.transform.position = new Vector3(0f, 0f, -1f);
+                ReSetUpVideos(VideoPlayer4);
+
                 Rumbling.Stop();
-                NextOne.GetComponent<FadeIn>().StartFadeIn();
                 StartCoroutine(CaseFour(fadeTime));
                 break;
             case 3:
                 stage3 = true;
                 fadeTime = VideoPlayer1.GetComponent<FadeIn>().lerpDuration;
-                //print("Stage 3" + CurrentOne);
                 start = false;
                 StartCoroutine(StageThree);
 
-
-                
-                
-
-
-
-
-
-
-
-                NextOne = VideoPlayer3;
-                NextOne.transform.GetComponent<MeshRenderer>().material.color = new Color(NextOne.transform.GetComponent<MeshRenderer>().material.color.r,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.g,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.b,
-                                                                              0);
-
-                VideoPlayer1.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer2.transform.position = new Vector3(100f, 0f, 0f);
-                VideoPlayer3.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer4.transform.position = new Vector3(100f, 0f, .1f);
-
-                CurrentOne.transform.position = new Vector3(0f, 0f, 0f);
-                NextOne.transform.position = new Vector3(0f, 0f, -1f);
-
-                NextOne.GetComponent<FadeIn>().StartFadeIn();
+                ReSetUpVideos(VideoPlayer3);
 
                 int Index = Random.Range(0, 9);
                 ProverbClip = provebs[Index];
@@ -219,42 +182,14 @@ public class VideoManager : MonoBehaviour
                 fadeTime = VideoPlayer1.GetComponent<FadeIn>().lerpDuration;
                 stage3 = false;
 
-
-
-
-                //print("Stage 2" + CurrentOne);
                 start = false;
 
-                NextOne = VideoPlayer2;
-                NextOne.transform.GetComponent<MeshRenderer>().material.color = new Color(NextOne.transform.GetComponent<MeshRenderer>().material.color.r,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.g,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.b,
-                                                                              0);
-
-                VideoPlayer1.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer2.transform.position = new Vector3(100f, 0f, 0f);
-                VideoPlayer3.transform.position = new Vector3(100f, 0f, .1f);
-                VideoPlayer4.transform.position = new Vector3(100f, 0f, .1f);
+                ReSetUpVideos(VideoPlayer2);
 
                 Rumbling.Stop();
 
-
-                CurrentOne.transform.position = new Vector3(0f, 0f, 0f);
-                NextOne.transform.position = new Vector3(0f, 0f, -1f);
-
-                NextOne.GetComponent<FadeIn>().StartFadeIn();
                 StartCoroutine(CaseTwo(fadeTime));
 
-                /*if (!StartTimer)
-                {
-                    return;
-                }
-                else
-                {
-                    StopCoroutine(StageThree);
-                    //Debug.Log("Stoped Stage3");
-                    StartTimer = false;
-                }*/
                 break;
             case 1:
                 //print("Stage 1");
@@ -281,33 +216,14 @@ public class VideoManager : MonoBehaviour
                     stage3 = false;
                     //print("Stage 1" + CurrentOne);
 
-                    VideoPlayer1.transform.position = new Vector3(100f, 0f, .1f);
-                    VideoPlayer2.transform.position = new Vector3(100f, 0f, 0f);
-                    VideoPlayer3.transform.position = new Vector3(100f, 0f, .1f);
-                    VideoPlayer4.transform.position = new Vector3(100f, 0f, .1f);
                     Rumbling.Stop();
-                    NextOne = VideoPlayer1;
-                    NextOne.transform.GetComponent<MeshRenderer>().material.color = new Color(NextOne.transform.GetComponent<MeshRenderer>().material.color.r,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.g,
-                                                                              NextOne.transform.GetComponent<MeshRenderer>().material.color.b,
-                                                                              0);
-                    //print("current is " + CurrentOne.name + "Next is " + NextOne.name + "Stage is " + intelligence);
-                    CurrentOne.transform.position = new Vector3(0f, 0f, 0f);
-                    NextOne.transform.position = new Vector3(0f, 0f, -1f);
+
+                    ReSetUpVideos(VideoPlayer1);
+
                     Symbols.SetActive(false);
-                    NextOne.GetComponent<FadeIn>().StartFadeIn();
+                    //NextOne.GetComponent<FadeIn>().StartFadeIn();
                     StartCoroutine(CaseOne(fadeTime));
                 }
-
-                /*if (!StartTimer)
-                {
-                    return;
-                }
-                else
-                {
-                    StopCoroutine(StageThree);
-                    StartTimer = false;
-                }*/
 
                 break;
             default:
@@ -329,6 +245,23 @@ public class VideoManager : MonoBehaviour
                 intelligence = intelligenceToStage();
             }
         }
+    }
+
+    private void ReSetUpVideos(VideoPlayer NextVideo) {
+        NextOne = NextVideo;
+        NextOne.transform.GetComponent<MeshRenderer>().material.color = new Color(NextOne.transform.GetComponent<MeshRenderer>().material.color.r,
+                                                                      NextOne.transform.GetComponent<MeshRenderer>().material.color.g,
+                                                                      NextOne.transform.GetComponent<MeshRenderer>().material.color.b,
+                                                                      0);
+        VideoPlayer1.transform.position = new Vector3(100f, 0f, .1f);
+        VideoPlayer2.transform.position = new Vector3(100f, 0f, 0f);
+        VideoPlayer3.transform.position = new Vector3(100f, 0f, .1f);
+        VideoPlayer4.transform.position = new Vector3(100f, 0f, .1f);
+
+        CurrentOne.transform.position = new Vector3(0f, 0f, 0f);
+        NextOne.transform.position = new Vector3(0f, 0f, -1f);
+
+        NextOne.GetComponent<FadeIn>().StartFadeIn();
     }
 
     private IEnumerator EasyInput() {
@@ -428,7 +361,6 @@ public class VideoManager : MonoBehaviour
 
     private IEnumerator StartStageOne()
     {
-        //Debug.Log("StartTimer");
         //StartTimer = true;
         yield return new WaitForSeconds(stage4Duration);
         intelligence = 1;
